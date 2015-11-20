@@ -1,4 +1,4 @@
-React quizz component example
+How to quickly develop a quiz component with ReactJS
 =============================
 This is a quick tutorial showing how you can fastly develop a simple and reusable component using ReactJS.
 
@@ -16,15 +16,15 @@ We need to display a question, allow the user to select one or more answers, val
 
 After all questions have been answered we'd like to inform the user of its score and list the questions where he was right or false.
 
-Quiz data (quiz title, questions and answers) can be fetched from an api returning a formated json (we'll use a local json file for the tutorial).
+Quiz data (quiz title, questions and answers) can be fetched from an api returning a formatted json (we'll use a local json file for the tutorial).
 
-The way
+Getting it Done
 -------------
 
 ReactJs components must define a render method which returns the html they have to display depending on their properties and state.
 
-For our case we will split our component in two component: a main component ```Quiz``` representing the whole quiz and a stateless ```Question``` component. The ```Quiz``` component state will contains: quiz data, user answers and current question to display properties will not be used as our component is standalone.
-```Question``` component properties will be: question id, question data and two callback methods: one to add an answer choice and one to validate all choices (and go to the next question).
+For our usecase, we will split our components in two component: a main component ```Quiz``` representing the whole quiz and a stateless ```Question``` component. The ```Quiz``` component state contains: quiz data, user answers and current question to display. We do not set properties to our component as it is standalone.
+```Question``` component properties are: question id, question data and two callback methods: one to add an answer choice and one to validate all choices (and go to the next question).
 
 We first create an empty React Quiz component and export it:
 ```javascript
@@ -35,7 +35,7 @@ var Quiz = React.createClass({
 module.exports = Quiz;
 ```
 
-Then state is initiated as follow:
+Then the state is initiated as follows:
 ```javascript
   getInitialState: function(){
     return {
@@ -45,10 +45,10 @@ Then state is initiated as follow:
     }
   },
 ```
-```quiz``` is an object that will contain quiz data, user_answers will evolve when user add its choices to questions. Step indicates the current question it's initializated to 0.
+```quiz``` is an object which contains quiz data. ```user_answers``` evolves as the user adds its choices to questions. ```step` indicates the current question and is initializated to 0.
 
-Now we need to load quiz data from a json file and update the state consequently. For this we'll use the componentDidMount method which is called just after the initial render.
-When state is updated render method is called again. This time with quiz data.
+We now need to load quiz data from a json file and update the ```state``` consequently. For this, we use the ```componentDidMount``` method which is called just after the initial ```render```.
+When ```state``` is updated ```render``` method is called again, this time with quiz data.
 ```javascript
   componentDidMount: function(quizId){
     $.getJSON("./assets/quiz.json", function(result) {
@@ -79,7 +79,7 @@ Quiz data is a json formated as follow:
 }
 ```
 
-Our component has all data it needs to display a quiz. We can add a few methods to make it alive: go to the next question, add a user answer, redo the quiz, compute the current score:
+Our component has all the data it needs to display a quiz. We can add a few methods to make it dynamic: go to the next question, add a user answer, redo the quiz, compute the current score:
 ```javascript
   nextStep: function(){
     this.setState({step: (this.state.step + 1)});
@@ -112,7 +112,7 @@ Our component has all data it needs to display a quiz. We can add a few methods 
   },
 ```
 
-Finaly we can write the render method. We want our component to display two types of screen; a question with its available answer and the result of a quiz session. Our main render call one of them depending of the current state:
+Finaly we can write the ```render``` method. We want our component to display two types of screen; a question with its available answers and the result of a quiz session. Our main renders calls one of them based on the current state:
 ```javascript
   render: function(){
     if (!this.state.quiz.questions) {return <div></div>}
@@ -132,7 +132,7 @@ Finaly we can write the render method. We want our component to display two type
   }
 ```
 
-Question component simply defines a render method using properties given by Quie component and calling callbacks when user interacts:
+The ```Question``` component simply defines a render method using properties given by ```Quiz``` component, and calls callbacks when the user interacts with it:
 ```javascript
 var React = require('react');
 
@@ -176,9 +176,9 @@ var Question = React.createClass({
   }
 });
 module.exports = Question;
-``` 
+```
 
-And renderResult call isAnswerRight method to list result for each question:
+```renderResult``` calls the ```isAnswerRight```l method to list result for each question:
 ```javascript
  renderResult: function(){
     var result = Object.keys(this.state.quiz.questions).map(function\
@@ -195,10 +195,10 @@ And renderResult call isAnswerRight method to list result for each question:
     }.bind(this));
 ```
 
-Instalation
+Installation
 -------------
 
-You can localy install the project on your computer.
+You can locally install the project on your computer.
 Requirements: npm must be installed on your computer, you can use httpster to serve the files.
 
 ```
@@ -208,9 +208,9 @@ npm install
 ./node_modules/gulp/bin/gulp.js
 ```
 
-And then in an other shell launch httpster:
+In an other, shell launch httpster:
 ```
 cd quiz-react/dist
 httpster
 ```
-Now you can access the quiz localy: http://localhost:3333
+You can now access the quiz locally: http://localhost:3333
